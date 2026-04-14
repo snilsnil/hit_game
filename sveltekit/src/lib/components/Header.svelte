@@ -19,17 +19,6 @@
 					</table>
 					<!-- 여기는 로그인 관련 사항(jwt를 사용할것의므로 잠시 보류) -->
 				</div>
-				<div id="article">
-					<div id="contents">
-						<script>
-                            // 수정한 부분
-                            var chatWindowWidth = window.innerWidth;
-                            if (chatWindowWidth > 1023) {
-                                document.write(gm_prolog());
-                            }
-						</script>
-					</div>
-				</div>
 			</div>
 		</h1>
 	</nav>

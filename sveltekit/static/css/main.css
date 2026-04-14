@@ -168,13 +168,17 @@ ul li {
 }
 
 #tdstory {
+    margin-left: 3%;
+    margin-top:1%;
     color: #ffffff;
     width: 709px;
-    height: 400px;
+    height: 30%;
 }
 
 #tdimg {
-    height: 400px;
+    margin-left: 3%;
+    width: 15%;
+    height: 30%;
     vertical-align: top;
 }
 
@@ -260,7 +264,6 @@ ul li {
 
 #gm_story p {
     font-size: 20px;
-    padding-left: 20px;
     margin: 0px;
 }
 

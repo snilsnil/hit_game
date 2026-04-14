@@ -8,12 +8,9 @@
 
 <svelte:head>
 	<link rel="icon" href={favicon} />
-	<link rel="stylesheet" href="/css/main_340.css" media="screen and (min-width: 340px)" />
-	<link rel="stylesheet" href="/css/main_690.css" media="screen and (max-width: 690px)" />
-	<link rel="stylesheet" href="/css/main_1400.css" media="screen and (min-width: 1400px)" />
-	<link rel="stylesheet" href="/css/main_1900.css" media="screen and (max-width: 1900px)" />
-	<script src="/js/index.js"></script>
-	<script defer src="/js/index2.js"></script>
+	<link rel="stylesheet" href="/css/main.css" media="(min-width: 1280px)" />
+	<link rel="stylesheet" href="/css/main_690.css" media="(min-width: 690px) and (max-width: 1279px)" />
+	<link rel="stylesheet" href="/css/main_340.css" media="(min-width: 340px) and (max-width: 659px)" />
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </svelte:head>
 <Header />

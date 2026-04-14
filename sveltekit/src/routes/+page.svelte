@@ -1,3 +1,9 @@
+<script>
+	import Introduction from '$lib/components/Introduction.svelte';
+</script>
+
+<Introduction />
+
 <div style="color:white" id="gm_menu">
 	<div class="device" id="nintento_device">
 		<div class="imagepr">
