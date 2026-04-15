@@ -1,5 +1,30 @@
 <script>
 	import { enhance } from "$app/forms";
+    import { page } from '$app/state';
+
+    $effect(() => {
+        if (page.form?.success === false) {
+            alert(page.form.message);
+        }
+    });
+
+    /**
+	 * @param {{ preventDefault: () => void; currentTarget: HTMLFormElement; }} event
+	 */
+
+    const onSubmitForm = (event) => {
+        const formData = new FormData(event.currentTarget);
+        const id = formData.get('id');
+        const password = formData.get('password');
+
+        if (!id || !password) {
+            alert('아이디와 비밀번호를 모두 입력해주세요.');
+            event.preventDefault();
+            return;
+        }
+    };
+
+
 
 </script>
 <svelte:head>
@@ -8,7 +33,7 @@
 	<link rel="stylesheet" href="/css/logInAndSignUp_340.css" media="(min-width: 340px) and (max-width: 659px)" /> -->
 </svelte:head>
 
-<form action="?/login" method="post" class="loginForm" use:enhance>
+<form action="?/login" method="post" class="loginForm" { onSubmitForm } use:enhance>
     <h2>로그인</h2>
     <div class="Form">
         <table>
@@ -41,7 +66,7 @@
     <input type="submit" class="btn" value="로그인">
 </form>
 
-<input class = "signup" type="button" value="ID/PWD 찾기" on:click={() => {location.href = '/findidpassword';}}>
+<input class = "signup" type="button" value="ID/PWD 찾기" onclick={() => {location.href = '/findidpassword';}}>
 
 <form action="/signup" class="loginForm">
     <div class="bottomText2">

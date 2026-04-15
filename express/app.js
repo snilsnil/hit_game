@@ -12,6 +12,7 @@ const communityController = require("./controllers/communityController");
 // modules
 const express = require("express"), // express를 요청
   layouts = require("express-ejs-layouts"), // express-ejs-layout의 요청
+  dovenv = require("dotenv").config(),// dotenv의 요청
   app = express(); // express 애플리케이션의 인스턴스화
 
 // controllers 폴더의 파일을 요청
@@ -33,18 +34,16 @@ const pagesController = require("./controllers/pagesController"),
  */
 
 // 애플리케이션에 Mongoose 설정
-const mongoose = require("mongoose"), // mongoose를 요청
-  dbName = "Hitgame";
-
+const mongoose = require("mongoose"); // mongoose를 요청
 // 데이터베이스 연결 설정
-mongoose.connect(`mongodb://127.0.0.1:27017/${dbName}`, {
+mongoose.connect(`${process.env.MONGODB_URI}`, {
   useNewUrlParser: true,
 });
 
 // 연결되면 메시지를 보냄
 const db = mongoose.connection;
 db.once("open", () => {
-  console.log(`Connected to ${dbName} MongoDB using Mongoose!`);
+  console.log(`Connected to  MongoDB using Mongoose!`);
 });
 
 /**
@@ -95,7 +94,7 @@ app.use("/", router); // 라우터를 애플리케이션에 추가
 
 router.get("/", pagesController.showHome); // 홈 메인 화면
 
-router.post("/login", pagesController.showLogin); // 로그인 화면
+// router.post("/login", pagesController.showLogin); // 로그인 화면
 router.post("/loginProcess", usersController.login); //로그인 기능 라우터
 router.post("/logout", usersController.logout); //로그아웃 라우터
 
@@ -112,6 +111,7 @@ router.post("/sspwd", usersController.updatepwd); // 비밀번호 수정 기능 
 // router.post("/signup", pagesController.showSignup); //회원가입 홈페이지
 router.post("/success_signup", usersController.create); // 회원가입 기능 라우터
 
+router.post("/login", userInfoController.login); // 로그인 기능 라우터
 router.post("/signup", userInfoController.signup);
 
 

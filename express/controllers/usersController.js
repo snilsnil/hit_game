@@ -7,7 +7,7 @@
  * userController.js에서 인덱스 액션 생성과 index 액션의 재방문
  */
 const User = require("../models/User"),
-  bcrypt = require("bcrypt"),
+  bcrypt = require("bcryptjs"),
   getUserParams = (body) => {
     return {
       id: body.id,

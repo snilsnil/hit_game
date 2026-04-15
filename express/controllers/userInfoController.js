@@ -1,9 +1,10 @@
 "use strict";
 
-const { login } = require("./usersController");
+const jwt = require("jsonwebtoken");
+const secretKey = process.env.SECRETKEY; // .env 파일에서 SECRETKEY 값을 가져옴
 
 const User = require("../models/User"),
-    bcrypt = require("bcrypt"),
+    bcrypt = require("bcryptjs"),
     getUserParams = (body) => {
         return {
             id: body.id,
@@ -45,11 +46,13 @@ module.exports = {
                 if (user) {
                     bcrypt.compare(userParams.password, user.password, (err, result) => {
                         if (result === true) {
-                            req.session.isLoggedIn = true;
-                            req.session.user = user;
+                            const accessToken = jwt.sign({ id: user.id }, secretKey, { expiresIn: "2h" });
+                            const refreshToken = jwt.sign({ id: user.id }, secretKey, { expiresIn: "7d" });
                             res.json({
                                 message: "로그인 성공",
-                                statusCode: 200
+                                statusCode: 200,
+                                accessToken: accessToken,
+                                refreshToken: refreshToken
                             });
                         } else {
                             res.json({

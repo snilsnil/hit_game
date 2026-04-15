@@ -12,7 +12,7 @@
  * 새로운 형식을 다른 모델에 적용할 것이다.
  */
 const mongoose = require("mongoose"),
-  bcrypt = require("bcrypt"),
+  bcrypt = require("bcryptjs"),
   { Schema } = mongoose,
   userSchema = Schema(
     // 사용자 스키마 생성

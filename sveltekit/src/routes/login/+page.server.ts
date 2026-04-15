@@ -22,10 +22,13 @@ export const actions = {
             body: JSON.stringify({ id, password })
         });
 
-        if (response.ok) {
-            const result = await response.json();
+        const result = await response.json();
+
+        if (result.statusCode === 200) {
             console.log(result);
             // return { success: true };
+        } else if (result.statusCode === 400) {
+            return { success: false, message : result.message };
         } else {
             return { success: false, message : '문제가 발생했습니다. 잠시후 다시 시도해주세요.' };
         }
