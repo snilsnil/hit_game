@@ -1,7 +1,6 @@
 <script lang="ts">
 	import './layout.css';
 	import favicon from '$lib/assets/favicon.svg';
-	import Header from '$lib/components/Header.svelte';
 
 	let { children } = $props();
 </script>
@@ -13,5 +12,4 @@
 	<link rel="stylesheet" href="/css/main_340.css" media="(min-width: 340px) and (max-width: 659px)" />
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </svelte:head>
-<Header />
 {@render children()}

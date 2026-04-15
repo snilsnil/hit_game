@@ -19,6 +19,7 @@ const pagesController = require("./controllers/pagesController"),
   pagesController2 = require("./controllers/pagesController2"),
   usersController = require("./controllers/usersController"),
   errorController = require("./controllers/errorController"),
+  userInfoController = require("./controllers/userInfoController"),
   cookieParser = require("cookie-parser"),
   connectFlash = require("connect-flash"),
   expressSession = require("express-session"),
@@ -108,8 +109,10 @@ router.post("/findid", usersController.findid); // ID 찾은 홈페이지
 router.post("/findpwd", usersController.findpwd); // 비밀번호 수정을 위한 홈페이지
 router.post("/sspwd", usersController.updatepwd); // 비밀번호 수정 기능 라우터
 
-router.post("/signup", pagesController.showSignup); //회원가입 홈페이지
+// router.post("/signup", pagesController.showSignup); //회원가입 홈페이지
 router.post("/success_signup", usersController.create); // 회원가입 기능 라우터
+
+router.post("/signup", userInfoController.signup);
 
 
 /**

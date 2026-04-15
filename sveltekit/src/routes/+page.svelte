@@ -1,7 +1,9 @@
 <script>
 	import Introduction from '$lib/components/Introduction.svelte';
+	import Header from '$lib/components/Header.svelte';
 </script>
 
+<Header />
 <Introduction />
 
 <div style="color:white" id="gm_menu">
