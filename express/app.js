@@ -112,7 +112,9 @@ router.post("/sspwd", usersController.updatepwd); // 비밀번호 수정 기능 
 router.post("/success_signup", usersController.create); // 회원가입 기능 라우터
 
 router.post("/login", userInfoController.login); // 로그인 기능 라우터
-router.post("/signup", userInfoController.signup);
+router.post("/signup", userInfoController.signup); // 회원가입 기능 라우터
+router.post("/checkAccessToken", userInfoController.checkAccessToken); // accessToken 검증 라우터
+router.post("/checkRefreshToken", userInfoController.checkRefreshToken); // refreshToken 검증 라우터 
 
 
 /**

@@ -1,3 +1,10 @@
+<script lang="ts">
+	// import { page } from '$app/state';
+	// console.log(page.data);
+
+	import { page } from '$app/state';
+</script>
+
 <header>
 	<nav>
 		<h1>
@@ -8,7 +15,7 @@
 							<tr>
 								<td
 									style="width:120px; cursor:pointer;"
-									on:click={() => {
+									onclick={() => {
 										location.href = '/';
 									}}
 								>
@@ -22,14 +29,17 @@
 						<tbody>
 							<tr>
 								<td>
-									<!-- {#if }
+									{#if !page.data.id }
 
-									{else}
+										<input id="login" type="button" value="로그인" onclick={() => {location.href = '/login';}} />
 
-									{/if} -->
-								
-										<input id="login" type="button" value="로그인" on:click={() => {location.href = '/login';}} />
-						
+									{:else}
+
+										<div  id="user">
+											{page.data.id}님 환영합니다.<input id="logout" type="button" value="로그아웃" onclick={() => {location.href = '/logout';}} />
+										</div>
+
+									{/if}
 								</td>
 							</tr>
 						</tbody>

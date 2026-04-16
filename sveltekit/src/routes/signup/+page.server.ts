@@ -1,12 +1,13 @@
 
-import type { Actions } from './$types';
+import type { Actions, PageServerLoad } from './$types';
 import { redirect } from '@sveltejs/kit';
 
-export const load = async () => {
-    // const response = await fetch('http://localhost:3000/login');
-    // const data = await response.json();
-    // console.log(data);
-    return {};
+export const load: PageServerLoad = async ({ cookies }) => {
+    const accessToken = cookies.get('accessToken');
+    const refreshToken = cookies.get('refreshToken');
+    if (accessToken || refreshToken) {
+        throw redirect(302, '/');
+    }
 }
 
 export const actions = {

@@ -121,6 +121,27 @@ ul li {
     cursor: pointer;
 }
 
+#user{
+    padding-top: 7px;
+    padding-right: 30px;
+    float: right;
+    color: white;
+    font-weight: bold;
+    font-size: 17px;
+    background: rgba(0, 0, 0, 0);
+}
+
+#logout {
+    padding-top: 7px;
+    padding-right: 30px;
+    float: right;
+    color: white;
+    font-weight: bold;
+    font-size: 17px;
+    background: rgba(0, 0, 0, 0);
+    cursor: pointer;
+}
+
 
 
 #ssclogin {

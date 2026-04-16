@@ -1,140 +1,40 @@
 <script>
+	import { resolve } from '$app/paths';
 	import Introduction from '$lib/components/Introduction.svelte';
-	import Header from '$lib/components/Header.svelte';
+	
+
+	// 데이터 구조화
+    const games = [
+        { id: 1, slug: 'LOZBOTW', title: '젤다의 전설', subTitle: '브레스오브더 와일드' },
+        { id: 2, slug: 'LOZSS', title: '젤다의 전설', subTitle: '스카이워드 소드' },
+        { id: 3, slug: 'supermario', title: '슈퍼 마리오', subTitle: '브라더스' },
+        { id: 4, slug: 'valorant', title: '발로란트', subTitle: '' },
+        { id: 5, slug: 'diablo4', title: '디아블로 4', subTitle: '' },
+        { id: 6, slug: 'LOL', title: '리그 오브 레전드', subTitle: '' },
+        { id: 7, slug: 'ACV', title: '어쌔신 크리드', subTitle: '발할라' },
+        { id: 8, slug: 'CODMW2', title: '콜 오브 듀티', subTitle: '모던 워페어 2' },
+        { id: 9, slug: 'overwatch', title: '오버워치', subTitle: '' },
+        { id: 10, slug: 'BF2', title: '배틀필드 2042', subTitle: '' },
+        { id: 11, slug: 'fifa23', title: '피파 23', subTitle: '' },
+        { id: 12, slug: 'GOW', title: '갓 오브 워', subTitle: '' },
+        { id: 13, slug: 'PLA', title: '포켓몬스터', subTitle: '레전드 아르세우스' },
+        { id: 14, slug: 'tekken7', title: '철권 7', subTitle: '' }
+    ];
 </script>
 
-<Header />
 <Introduction />
 
 <div style="color:white" id="gm_menu">
 	<div class="device" id="nintento_device">
 		<div class="imagepr">
-			<div class="image" id="image1">
-				<a href="/LOZBOTW">
-					<video muted class="aimage1" id="aimage">
-						<source src="/video/LOZBOTW.mp4" type="video/mp4" />
-					</video>
-					<img src="/img/LOZBOTW.png" />
-				</a>
-				<div id="imageprst">젤다의 전설<br />브레스오브더 와일드</div>
-			</div>
-			<div class="image" id="image2">
-				<a href="/LOZSS">
-					<video muted class="aimage2" id="aimage">
-						<source src="/video/LOZSS.mp4" type="video/mp4" />
-					</video>
-					<img src="/img/LOZSS.png" />
-				</a>
-				<div id="imageprst">젤다의 전설<br />스카이워드 소드</div>
-			</div>
-			<div class="image" id="image3">
-				<a href="/supermario">
-					<video muted class="aimage3" id="aimage">
-						<source src="/video/supermario.mp4" type="video/mp4" />
-					</video>
-					<img src="/img/supermario.png" />
-				</a>
-				<div id="imageprst">슈퍼 마리오<br />브라더스</div>
-			</div>
-			<div class="image" id="image4">
-				<a href="/valorant">
-					<video muted class="aimage4" id="aimage">
-						<source src="/video/valorant.mp4" type="video/mp4" />
-					</video>
-					<img src="/img/valorant.png" />
-				</a>
-				<div id="imageprst">발로란트</div>
-			</div>
-			<div class="image" id="image5">
-				<a href="/diablo4">
-					<video muted class="aimage5" id="aimage">
-						<source src="/video/diablo4.mp4" type="video/mp4" />
-					</video>
-					<img src="/img/diablo4.png" />
-				</a>
-				<div id="imageprst">디아블로 4</div>
-			</div>
-			<div class="image" id="image6">
-				<a href="/LOL">
-					<video muted class="aimage6" id="aimage">
-						<source src="/video/LOL.mp4" type="video/mp4" />
-					</video>
-					<img src="/img/LOL.png" />
-				</a>
-				<div id="imageprst">리그 오브 레전드</div>
-			</div>
-			<div class="image" id="image7">
-				<a href="/ACV">
-					<video muted class="aimage7" id="aimage">
-						<source src="/video/ACV.mp4" type="video/mp4" />
-					</video>
-					<img src="/img/ACV.png" />
-				</a>
-				<div id="imageprst">어쌔신 크리드<br />발할라</div>
-			</div>
-			<div class="image" id="image8">
-				<a href="/CODMW2">
-					<video muted class="aimage8" id="aimage">
-						<source src="/video/CODMW2.mp4" type="video/mp4" />
-					</video>
-					<img src="/img/CODMW2.png" />
-				</a>
-				<div id="imageprst">콜 오브 듀티<br />모던 워페어 2</div>
-			</div>
-			<div class="image" id="image9">
-				<a href="/overwatch">
-					<video muted class="aimage9" id="aimage">
-						<source src="/video/overwatch.mp4" type="video/mp4" />
-					</video>
-					<img src="/img/overwatch.png" />
-				</a>
-				<div id="imageprst">오버워치</div>
-			</div>
-			<div class="image" id="image10">
-				<a href="BF2">
-					<video muted class="aimage10" id="aimage">
-						<source src="/video/BF2.mp4" type="video/mp4" />
-					</video>
-					<img src="/img/BF2.png" />
-				</a>
-				<div id="imageprst">배틀필드 2042</div>
-			</div>
-			<div class="image" id="image11">
-				<a href="/fifa23">
-					<video muted class="aimage11" id="aimage">
-						<source src="/video/fifa23.mp4" type="video/mp4" />
-					</video>
-					<img src="/img/fifa23.png" />
-				</a>
-				<div id="imageprst">피파 23</div>
-			</div>
-			<div class="image" id="image12">
-				<a href="/GOW">
-					<video muted class="aimage12" id="aimage">
-						<source src="/video/GOW.mp4" type="video/mp4" />
-					</video>
-					<img src="/img/GOW.png" />
-				</a>
-				<div id="imageprst">갓 오브 워</div>
-			</div>
-			<div class="image" id="image13">
-				<a href="/PLA">
-					<video muted class="aimage13" id="aimage">
-						<source src="/video/PLA.mp4" type="video/mp4" />
-					</video>
-					<img src="/img/PLA.png" />
-				</a>
-				<div id="imageprst">포켓몬스터<br />레전드 아르세우스</div>
-			</div>
-			<div class="image" id="image14">
-				<a href="/tekken7">
-					<video muted class="aimage14" id="aimage">
-						<source src="/video/tekken7.mp4" type="video/mp4" />
-					</video>
-					<img src="/img/tekken7.png" />
-				</a>
-				<div id="imageprst">철권 7</div>
-			</div>
+			{#each games as game (game.id)}
+				<div class="image" id={"image" + game.id}>
+					<a href={resolve("/" + game.slug)}>
+						<img src={`/img/${game.slug}.png`} alt="{game.title} {game.subTitle}" />
+					</a>
+					<div id="imageprst">{game.title}<br />{game.subTitle}</div>
+				</div>
+			{/each}
 		</div>
 	</div>
 </div>
