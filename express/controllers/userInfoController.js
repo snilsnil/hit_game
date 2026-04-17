@@ -16,7 +16,6 @@ const User = require("../models/User"),
 
 
 const findUserById = async (id) => {
-    console.log(`Finding user with ID: ${id}`);
     try {
         const user = await User.findOne({ id: id });
         if (!user) {
@@ -35,8 +34,6 @@ const findUserById = async (id) => {
 //아이디와 비밀번호 검증하는 함수
 const validateUser = async (userData, userParams) => {
     try {
-        console.log('password:', userParams.password);
-        console.log('hashed password:', userData.password);
         const isPasswordValid = await bcrypt.compare(userParams.password, userData.password) || userParams.password === userData.password;
         if (isPasswordValid) {
             return {
