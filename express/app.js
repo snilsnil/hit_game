@@ -11,6 +11,8 @@ const communityController = require("./controllers/communityController");
 
 // modules
 const express = require("express"), // express를 요청
+  path = require("path"),
+  multer = require("multer"), //multer를 요청
   layouts = require("express-ejs-layouts"), // express-ejs-layout의 요청
   dovenv = require("dotenv").config(),// dotenv의 요청
   app = express(); // express 애플리케이션의 인스턴스화
@@ -21,6 +23,8 @@ const pagesController = require("./controllers/pagesController"),
   usersController = require("./controllers/usersController"),
   errorController = require("./controllers/errorController"),
   userInfoController = require("./controllers/userInfoController"),
+  gameController = require("./controllers/gameController"),
+  createAdmin = require("./seeds/admin"),
   cookieParser = require("cookie-parser"),
   connectFlash = require("connect-flash"),
   expressSession = require("express-session"),
@@ -38,13 +42,49 @@ const mongoose = require("mongoose"); // mongoose를 요청
 // 데이터베이스 연결 설정
 mongoose.connect(`${process.env.MONGODB_URI}`, {
   useNewUrlParser: true,
-});
+})
+  .then(async () => {
+    await createAdmin()
+  })
+  .catch((err) => {
+    console.error("Error connecting to MongoDB:", err);
+  });
 
 // 연결되면 메시지를 보냄
 const db = mongoose.connection;
 db.once("open", () => {
   console.log(`Connected to  MongoDB using Mongoose!`);
 });
+;
+
+
+
+/**
+ * multer
+ */
+
+
+// 저장 방식 설정
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    if (file.fieldname === 'gameImage') {
+      cb(null, 'public/img/');
+    } else if (file.fieldname === 'gameVideo') {
+      cb(null, 'public/video/');
+    } else {
+      cb(new Error('Invalid field name'), false);
+    }
+  },
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname);
+    const filename = file.originalname;
+    cb(null, filename);
+  }
+});
+
+const upload = multer({ storage });
+
+
 
 /**
  * =====================================================================
@@ -60,9 +100,8 @@ app.use(layouts); // layout 모듈 사용을 위한 애플리케이션 세팅
 app.use(express.static("public"));
 
 // body-parser의 추가
-app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-
+app.use(express.urlencoded({ extended: true, limit: '100mb' }));
 
 app.use(cookieParser("secret_passcode"));
 app.use(expressSession({
@@ -74,6 +113,8 @@ app.use(expressSession({
   saveUninitialized: false
 }));
 app.use(connectFlash());
+
+
 
 
 
@@ -115,6 +156,24 @@ router.post("/login", userInfoController.login); // 로그인 기능 라우터
 router.post("/signup", userInfoController.signup); // 회원가입 기능 라우터
 router.post("/checkAccessToken", userInfoController.checkAccessToken); // accessToken 검증 라우터
 router.post("/checkRefreshToken", userInfoController.checkRefreshToken); // refreshToken 검증 라우터 
+
+
+
+/**
+ * 게임 리스트 생성 및 삭제
+ */
+router.post('/gameCreate',
+  upload.fields([
+    { name: 'gameImage', maxCount: 1 },
+    { name: 'gameVideo', maxCount: 1 }
+  ]),
+  gameController.createGame
+);
+
+
+
+
+
 
 
 /**
@@ -199,6 +258,7 @@ router.post("/deleteAction", communityController.delete);
  */
 app.use(errorController.resNotFound); // 미들웨어 함수로 에러 처리 추가
 app.use(errorController.resInternalError);
+
 
 app.listen(app.get("port"), () => {
   // 3000번 포트로 리스닝 설정

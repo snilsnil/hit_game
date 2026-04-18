@@ -34,7 +34,13 @@ const mongoose = require("mongoose"),
         type: String,
         required: true,
         trim: true,
-      }, // 비밀번호 속성 추가
+      },
+      role: {
+        type: String,
+        enum: ["user", "admin"],
+        default: "user",
+        required: true,
+      },
     },
     {
       timestamps: true, // timestamps 속성을 추가해 createdAt 및 updatedAt 시간 기록
@@ -54,28 +60,6 @@ userSchema.pre("save", function (next) {
       next(error);
     });
 });
-
-
-// pre("save") 훅 설정
-// userSchema.pre("save", function (next) {
-//   let user = this; // 콜백에서 함수 키워드 사용
-//   if (user.subscribedAccount === undefined) {
-//     // 기존 Subscriber 연결을 위한 조건 체크 추가
-//     Subscriber.findOne({
-//       email: user.email,
-//     }) // Single Subscriber를 위한 퀴리
-//       .then((subscriber) => {
-//         user.subscribedAccount = subscriber; // 사용자와 구독자 계정 연결
-//         next();
-//       })
-//       .catch((error) => {
-//         console.log(`Error in connecting subscriber: ${error.message}`);
-//         next(error); // 에러 발생 시 다음 미들웨어로 함수로 전달
-//       });
-//   } else {
-//     next(); // 이미 연결 존재 시 다음 미들웨어로 함수 호출
-//   }
-// });
 
 module.exports = mongoose.model("User", userSchema);
 

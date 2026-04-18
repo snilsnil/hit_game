@@ -48,14 +48,6 @@ export const load :LayoutServerLoad= async ({ cookies }) => {
     const accessToken = cookies.get('accessToken');
     const refreshToken = cookies.get('refreshToken');
     
-    // accessToken이 유효한 경우 사용자 정보를 반환
-    if (accessToken) {
-        const checkAccessTokenResult =await checkAccessToken(accessToken) 
-        if (checkAccessTokenResult.statusCode === 200) {
-            return { id: checkAccessTokenResult.id };
-        }
-    }
-    
     // accessToken이 유효하지 않은 경우 refreshToken을 검증하여 새로운 accessToken과 refreshToken을 발급받고 사용자 정보를 반환
     if (!accessToken&&refreshToken) {
         const checkRefreshTokenResult = await checkRefreshToken(refreshToken);
@@ -71,7 +63,6 @@ export const load :LayoutServerLoad= async ({ cookies }) => {
                 maxAge: 60 * 60 * 2 // 2 hours
                 , path: '/'
             });
-
             // 새로운 refreshToken을 쿠키에 저장
             cookies.set('refreshToken', newRefreshToken, {
                 httpOnly: true,
@@ -79,9 +70,18 @@ export const load :LayoutServerLoad= async ({ cookies }) => {
                 maxAge: 60 * 60 * 24 * 7 // 1 week
                 , path: '/'
             });
-            return { id: checkRefreshTokenResult.id };
         }
-    } else {
+    } 
+
+    // accessToken이 유효한 경우 사용자 정보를 반환
+    if (accessToken) {
+        const checkAccessTokenResult =await checkAccessToken(accessToken) 
+        if (checkAccessTokenResult.statusCode === 200) {
+            return { id: checkAccessTokenResult.id, role: checkAccessTokenResult.role };
+        }
+    }
+    
+    if(!accessToken&&!refreshToken){
         // accessToken과 refreshToken이 모두 유효하지 않은 경우 쿠키에서 삭제
         cookies.delete('accessToken', { path: '/' });
         cookies.delete('refreshToken', { path: '/' });

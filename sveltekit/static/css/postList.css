@@ -2,7 +2,7 @@
 
 @font-face {
     font-family: 'Interpark';
-    src: url(..//font/interpark.ttf) format('truetype');
+    src: url(../font/interpark.ttf) format('truetype');
 }
 
 * {

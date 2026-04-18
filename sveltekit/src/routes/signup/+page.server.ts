@@ -32,7 +32,7 @@ export const actions = {
         } else if (result.statusCode === 400) {
             return { success: false, message: result.message };
         } else {
-            return { success: false, message: 'Signup failed' };
+            return { success: false, message: result.message || '회원가입 중 오류가 발생했습니다.' };
         }
     }
 } satisfies Actions;

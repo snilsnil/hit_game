@@ -60,7 +60,7 @@ const newToken = async (userData) => {
     try {
         const accessToken = jwt.sign(
             {
-                id: userData.id, password: userData.password
+                id: userData.id, role: userData.role
             },
             secretKey,
             { expiresIn: "2h", algorithm: "HS256" });
@@ -106,7 +106,7 @@ module.exports = {
     signup: async (req, res, next) => {
         const userParams = getUserParams(req.body);
         try {
-            const newUser = await User.create(userParams);
+            const newUser = await User.create({ ...userParams, role: "user" });
             return res.json({
                 message: "회원가입이 성공적으로 완료되었습니다."
                 ,
@@ -177,26 +177,11 @@ module.exports = {
                 statusCode: 401
             });
         }
-
-        const user = await findUserById(decoded.id);
-        if (user.statusCode !== 200) {
-            return res.json(user);
-        }
-
-        const userData = user.user;
-
-        // 사용자 정보 검증
-        const validationResponse = await validateUser(userData, decoded);
-        if (validationResponse.statusCode !== 200) {
-            return res.json({
-                message: "유효하지 않은 access token입니다.",
-                statusCode: 401
-            });
-        }
         res.json({
             message: "Access token이 유효합니다.",
             statusCode: 200,
-            id: decoded.id
+            id: decoded.id,
+            role: decoded.role
         });
     },
 
@@ -236,7 +221,6 @@ module.exports = {
             statusCode: 200,
             accessToken: newTokenResponse.accessToken,
             refreshToken: newTokenResponse.refreshToken,
-            id: decoded.id
         });
     }
 };
