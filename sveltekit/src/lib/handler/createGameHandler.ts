@@ -4,7 +4,7 @@ export function onSubmitForm(formData: FormData) {
     
     //텍스트
     const gameTitle = formData.get('gameTitle')?.toString().trim() ?? '';
-    const gameSubTitle = formData.get('gameSubTitle')?.toString().trim() ?? '';
+    const gameGenre = formData.get('gameGenre')?.toString().trim() ?? '';
     const gameDeveloper = formData.get('gameDeveloper')?.toString().trim() ?? '';
     const gamePublisher = formData.get('gamePublisher')?.toString().trim() ?? '';
     const gameReleaseDate = formData.get('gameReleaseDate')?.toString().trim() ?? '';
@@ -26,7 +26,7 @@ export function onSubmitForm(formData: FormData) {
 
 
     // 텍스트 검증
-    if (!gameTitle || !gameSubTitle || !gameDeveloper || !gamePublisher || !gameReleaseDate || !gameDescription) {
+    if (!gameTitle || !gameGenre || !gameDeveloper || !gamePublisher || !gameReleaseDate || !gameDescription) {
     return {
         valid: false,
         message: '모든 필드를 입력해주세요'
