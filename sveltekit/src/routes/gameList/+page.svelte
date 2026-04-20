@@ -29,7 +29,8 @@
 					<td>
 						<!-- <a href="/gameList{game.gamePath}"> -->
 						<a href={resolve('/gameList' + game.gamePath)}>
-							{game.gameTitle}{game.gameSubTitle}
+							{game.gameTitle}
+							{game.gameSubTitle}
 						</a>
 					</td>
 					<td>{game.gameGenre}</td>

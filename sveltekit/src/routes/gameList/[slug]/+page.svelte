@@ -16,7 +16,7 @@
 			</tr>
 			<tr>
 				<td>제목</td>
-				<td>{game.gameTitle}{game.gameSubTitle}</td>
+				<td>{game.gameTitle} {game.gameSubTitle}</td>
 			</tr>
 			<tr>
 				<td>장르</td>
