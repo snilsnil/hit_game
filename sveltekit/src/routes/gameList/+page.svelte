@@ -1,7 +1,11 @@
+<script lang="ts">
+	import { resolve } from '$app/paths';
+	import { page } from '$app/state';
+</script>
+
 <svelte:head>
 	<link rel="stylesheet" href="/css/postList.css" media="(min-width: 1280px)" />
 </svelte:head>
-
 
 <table class="type">
 	<thead>
@@ -18,51 +22,26 @@
 		</tr>
 	</thead>
 	<tbody class="type06">
-		<!-- {#if postData}
-			{#each postData as post}
+		{#if page.data.gameListData}
+			{#each page.data.gameListData as game (game.gameNum)}
 				<tr>
+					<td>{game.gameNum}</td>
 					<td>
-						{post.postNum}
+						<!-- <a href="/gameList{game.gamePath}"> -->
+						<a href={resolve('/gameList' + game.gamePath)}>
+							{game.gameTitle}{game.gameSubTitle}
+						</a>
 					</td>
-					<td>
-						<form action="/<%= title %>/view_<%= text.textNum %>" method="post">
-							<input type="hidden" name="title" value="<%= title %>" />
-							<input type="submit" class="write" value={post.postTitle} />
-						</form>
-					</td>
-					<td>
-						{post.id}
-					</td>
-					<td>
-						{#if !post.update}
-							{#if post.create.toLocaleDateString( 'ko-KR', { year: 'numeric', month: 'long', day: 'numeric' } ) == today.toLocaleDateString( 'ko-KR', { year: 'numeric', month: 'long', day: 'numeric' } )}
-								{post.create.toLocaleTimeString('ko-KR', { hour: 'numeric', minute: 'numeric' })}
-							{:else}
-								{post.create.toLocaleDateString('ko-KR', {
-									year: 'numeric',
-									month: 'long',
-									day: 'numeric'
-								})}
-							{/if}
-						{:else if post.update.toLocaleDateString( 'ko-KR', { year: 'numeric', month: 'long', day: 'numeric' } ) == today.toLocaleDateString( 'ko-KR', { year: 'numeric', month: 'long', day: 'numeric' } )}
-							{post.update.toLocaleTimeString('ko-KR', {
-								hour: 'numeric',
-								minute: 'numeric'
-							})}
-						{:else}
-							{post.update.toLocaleDateString('ko-KR', {
-								year: 'numeric',
-								month: 'long',
-								day: 'numeric'
-							})}
-						{/if}
-					</td>
-					<td>
-						{post.textViewer}
-					</td>
+					<td>{game.gameGenre}</td>
+					<td>{game.gameDeveloper}</td>
+					<td>{game.gamePublisher}</td>
+					<td>{game.gamePlatform}</td>
+					<td>{game.gameReleaseDate}</td>
+					<td>{game.gameKoreanSubtitle == 'true' ? 'O' : 'X'}</td>
+					<td>{game.gameKoreanVoice == 'true' ? 'O' : 'X'}</td>
 				</tr>
 			{/each}
-		{/if} -->
+		{/if}
 	</tbody>
 </table>
 <button class="write" on:click={() => (location.href = '/gameList/create')}>게임 추가</button>
