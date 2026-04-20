@@ -31,7 +31,6 @@ const CounterGameNum = require("./counterGameNum"),
             },
             gameSubTitle: {
                 type: String,
-                required: true,
                 trim: true,
             },
             gameGenre: [{
