@@ -1,6 +1,12 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
+
+	$effect(() => {
+        if (page.data?.success === false) {
+            alert(page.form.message);
+        }
+    });
 </script>
 
 <svelte:head>

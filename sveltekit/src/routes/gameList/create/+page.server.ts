@@ -17,12 +17,12 @@ const changeStringToArray =  (gameData:FormData, target:string) => {
     
 }
 
-export const load: PageServerLoad = async () => {
-    // const accessToken = cookies.get('accessToken');
-    // const refreshToken = cookies.get('refreshToken');
-    // if (accessToken || refreshToken) {
-    //     throw redirect(302, '/');
-    // }
+export const load: PageServerLoad = async ({ parent}) => {
+    const parentData = await parent();
+
+    if(parentData.role !== 'admin'||!parentData.role){
+        return redirect(302, '/');
+    }
 }
 
 export const actions = {

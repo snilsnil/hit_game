@@ -1,5 +1,11 @@
 <script lang="ts">
 	import { page } from '$app/state';
+
+		$effect(() => {
+        if (page.data?.success === false) {
+            alert(page.form.message);
+        }
+    });
 	const game = page.data.gameData;
 </script>
 

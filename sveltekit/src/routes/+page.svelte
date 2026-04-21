@@ -3,6 +3,12 @@
 	import Introduction from '$lib/components/Introduction.svelte';
 	import { page } from '$app/state';
 
+		$effect(() => {
+        if (page.data?.success === false) {
+            alert(page.form.message);
+        }
+    });
+
 	// 데이터 구조화
 	const games = page.data.simpleGameData;
 </script>

@@ -2,6 +2,13 @@
 	import { enhance } from '$app/forms';
 	import { onSubmitForm } from '$lib/handler/createGameHandler';
 	import type { SubmitFunction } from '@sveltejs/kit';
+	import { page } from '$app/state';
+
+	$effect(() => {
+        if (page.data?.success === false) {
+            alert(page.form.message);
+        }
+    });
 
 	const handlerEnhance: SubmitFunction = ({ formData, cancel }) => {
 		const result = onSubmitForm(formData);

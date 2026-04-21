@@ -17,8 +17,8 @@ export const load: PageServerLoad = async ({ parent, params}) => {
     const result = await getGameList.json()
     
     if (result.statusCode === 200) { 
-        return {gameData:result.data}
+        return {success: true, gameData:result.data}
     } else { 
-        return {message:result.message}
+        return {success: false, message:result.message}
     }
 };

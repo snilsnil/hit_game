@@ -1,6 +1,12 @@
 <script>
 	import { page } from '$app/state';
 
+	$effect(() => {
+        if (page.data?.success === false) {
+            alert(page.form.message);
+        }
+    });
+
 	// 데이터 구조화
 	const game = page.data.game;
 </script>
