@@ -1,14 +1,14 @@
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ params }) => {
-    const slug=params.slug
-    const getGameData=await fetch(`http://localhost:3000/${slug}`, {
+export const load: PageServerLoad = async () => {
+
+    const getGameData=await fetch(`http://localhost:3000/simpleGameList/`, {
         method:'GET',
     })
     const result = await getGameData.json()
     
     if (result.statusCode === 200) { 
-        return {game:result.data}
+        return {simpleGameData:result.data}
     } else { 
         return {message:result.message}
     }

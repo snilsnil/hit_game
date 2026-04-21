@@ -112,7 +112,7 @@ router.post("/checkRefreshToken", userInfoController.checkRefreshToken); // refr
 
 
 /**
- * 게임 리스트
+ * admin 게임 리스트
  */
 router.get("/gameList", gameController.getGameList)
 
@@ -126,6 +126,14 @@ router.post('/gameCreate',
 
 router.get("/gameList/:slug", gameController.getGame)
 
+
+
+/**
+ * user 게임 리스트
+ */
+
+router.get('/simpleGameList', gameController.getSimpleGameList)
+router.get('/:slug', gameController.getGameData)
 
 
 

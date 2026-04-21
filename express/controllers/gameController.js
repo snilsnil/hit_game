@@ -129,7 +129,42 @@ module.exports = {
         }
     },
 
+    getSimpleGameList: async (req, res, next) => {
+        try {
+            const getGameListData = await GameList.find({}, 'gameNum gameTitle gameSubTitle gamePath gameImage gameDescription gameVideo')
+            return res.json({
+                message: "게임 리스트를 성공적으로 가져왔습니다.",
+                statusCode: 200,
+                data: getGameListData
+            })
+        } catch (error) {
+            console.log(`Error findAll game : ${error.message}`)
+            return res.json({
+                message: "게임 리스트를 가져오는 도중 오류가 발생했습니다.",
+                statusCode: 500
+            })
+        }
+    },
+
     getGame: async (req, res, next) => {
+        const slug = req.params.slug;
+        try {
+            const getGameData = await GameList.findOne({ gamePath: '/' + slug })
+            return res.json({
+                message: "게임 리스트를 성공적으로 가져왔습니다.",
+                statusCode: 200,
+                data: getGameData
+            })
+        } catch (e) {
+            console.log(`Error findOne game : ${error.message}`)
+            return res.json({
+                message: "게임을 가져오는 도중 오류가 발생했습니다.",
+                statusCode: 500
+            })
+        }
+    },
+
+    getGameData: async (req, res, next) => {
         const slug = req.params.slug;
         try {
             const getGameData = await GameList.findOne({ gamePath: '/' + slug })
