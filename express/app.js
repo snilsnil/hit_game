@@ -136,6 +136,7 @@ router.get("/gameList/:slug", gameController.getGame)
 router.get('/simpleGameList', gameController.getSimpleGameList)
 router.get('/gameData/:slug', gameController.getGameData) // 게임데이터를 가져오는 경로
 router.get('/postList/:slug', postController.getPostList)
+router.get('/:slug/:post', postController.getPostData)
 router.post('/:slug/write', postController.writePost)
 
 

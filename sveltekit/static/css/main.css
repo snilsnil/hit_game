@@ -141,8 +141,6 @@ ul li {
 }
 
 #logout {
-    padding-top: 7px;
-    padding-right: 30px;
     float: right;
     color: white;
     font-weight: bold;
@@ -162,8 +160,7 @@ ul li {
 
 #mainmenu {
     display: inline-block;
-    margin: 0;
-    padding: 0;
+    width:100%;
 }
 
 #mainmenu tr td {
@@ -188,7 +185,7 @@ ul li {
 
 #vdio {
     position: absolute;
-    top: 50%;
+    top: 58%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: -1000;

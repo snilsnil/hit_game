@@ -24,7 +24,7 @@ module.exports = {
         } catch (error) {
             console.log(`Error findAll postlist : ${error.message}`)
             return res.json({
-                message: "게임 리스트를 가져오는 도중 오류가 발생했습니다.",
+                message: "게시글 리스트를 가져오는 도중 오류가 발생했습니다.",
                 statusCode: 500
             })
         }
@@ -43,6 +43,26 @@ module.exports = {
             console.log(`Error create post : ${error.message}`)
             return res.json({
                 message: "게시글을 작성하는 도중 오류가 발생했습니다.",
+                statusCode: 500
+            })
+        }
+    },
+
+    getPostData: async (req, res, next) => {
+        const slug = req.params.slug;
+        const postNum = req.params.post
+
+        try {
+            const getPost = await PostList.findOne({ postGame: slug, postNum: postNum })
+            return res.json({
+                message: "게시글을 성공적으로 가져왔습니다.",
+                statusCode: 200,
+                data: getPost
+            })
+        } catch (error) {
+            console.log(`Error findOne postData : ${error.message}`)
+            return res.json({
+                message: "게시글을 가져오는 도중 오류가 발생했습니다.",
                 statusCode: 500
             })
         }
