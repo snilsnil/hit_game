@@ -20,6 +20,7 @@ const
   errorController = require("./controllers/errorController"),
   userInfoController = require("./controllers/userInfoController"),
   gameController = require("./controllers/gameController"),
+  postController = require("./controllers/postController"),
   createAdmin = require("./seeds/admin"),
   cookieParser = require("cookie-parser"),
   connectFlash = require("connect-flash"),
@@ -133,7 +134,9 @@ router.get("/gameList/:slug", gameController.getGame)
  */
 
 router.get('/simpleGameList', gameController.getSimpleGameList)
-router.get('/:slug', gameController.getGameData)
+router.get('/gameData/:slug', gameController.getGameData) // 게임데이터를 가져오는 경로
+router.get('/postList/:slug', postController.getPostList)
+router.post('/:slug/write', postController.writePost)
 
 
 
