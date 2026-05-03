@@ -3,10 +3,10 @@
 	import { page } from '$app/state';
 
 	$effect(() => {
-        if (page.data?.success === false) {
-            alert(page.form.message);
-        }
-    });
+		if (page.data?.success === false) {
+			alert(page.form.message);
+		}
+	});
 </script>
 
 <svelte:head>
@@ -51,4 +51,4 @@
 		{/if}
 	</tbody>
 </table>
-<button class="write" on:click={() => (location.href = '/gameList/create')}>게임 추가</button>
+<button class="write" onclick={() => (location.href = '/gameList/create')}>게임 추가</button>

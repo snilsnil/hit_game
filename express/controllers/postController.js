@@ -53,7 +53,9 @@ module.exports = {
         const postNum = req.params.post
 
         try {
-            const getPost = await PostList.findOne({ postGame: slug, postNum: postNum })
+            const getPost = await PostList.findOneAndUpdate({ postGame: slug, postNum: postNum },
+                { $inc: { postView: 1 } },  // 2. view 필드를 1만큼 증가 ($inc 사용)
+                { new: true },)
             return res.json({
                 message: "게시글을 성공적으로 가져왔습니다.",
                 statusCode: 200,
