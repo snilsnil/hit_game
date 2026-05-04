@@ -51,9 +51,9 @@
 							</span></strong
 						>
 						<br /><br />
-						<p style="font-size: {deviceHeight * 0.02}px;">
+						<pre style="font-size: {deviceHeight * 0.02}px;">
 							{selectedGame.gameDescription}
-						</p>
+						</pre>
 					</div>
 				</div>
 			{/if}

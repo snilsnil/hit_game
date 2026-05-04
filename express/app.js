@@ -125,6 +125,14 @@ router.post('/gameCreate',
   gameController.createGame
 );
 
+router.put('/modifyGame/:slug',
+  upload.gameListUpload.fields([
+    { name: 'gameImage', maxCount: 1 },
+    { name: 'gameVideo', maxCount: 1 }
+  ]),
+  gameController.modifyGame
+);
+
 router.get("/gameList/:slug", gameController.getGame)
 
 

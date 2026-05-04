@@ -1,4 +1,4 @@
-import { getGameIntroduction, getPostListData } from '$lib/api/post/+server';
+import { getGameIntroduction, getPostListData } from '$lib/api/post/server';
 import type { PageServerLoad } from './$types';
 
 export const prerender = true;

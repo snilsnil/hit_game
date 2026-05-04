@@ -8,6 +8,7 @@ export function onSubmitForm(formData: FormData) {
     const gameDeveloper = formData.get('gameDeveloper')?.toString().trim() ?? '';
     const gamePublisher = formData.get('gamePublisher')?.toString().trim() ?? '';
     const gameReleaseDate = formData.get('gameReleaseDate')?.toString().trim() ?? '';
+    const gamePath = formData.get('gamePath')?.toString().trim() ?? "";
     const gameDescription = formData.get('gameDescription')?.toString().trim() ?? '';
 
      // 플랫폼 체크박스
@@ -26,7 +27,7 @@ export function onSubmitForm(formData: FormData) {
 
 
     // 텍스트 검증
-    if (!gameTitle || !gameGenre || !gameDeveloper || !gamePublisher || !gameReleaseDate || !gameDescription) {
+    if (!gameTitle || !gameGenre || !gameDeveloper || !gamePublisher || !gameReleaseDate || !gamePath || !gameDescription) {
     return {
         valid: false,
         message: '모든 필드를 입력해주세요'

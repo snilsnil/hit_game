@@ -1,16 +1,15 @@
 <script>
-    import {page} from '$app/state'
+	import { page } from '$app/state';
 
-    	// 데이터 구조화
+	// 데이터 구조화
 	const game = page.data.game;
 
-    $effect(() => {
-        if (page.data?.success === false) {
-            alert(page.form.message);
-        }
-    });
+	$effect(() => {
+		if (page.data?.success === false) {
+			alert(page.form.message);
+		}
+	});
 </script>
-
 
 <div id="head">
 	<video controls>
@@ -33,33 +32,25 @@
 			<tr>
 				<td>장르</td>
 				<td>
-					{#each game.gameGenre as genre (genre)}
-						{genre}, &nbsp;
-					{/each}
+					{game.gameGenre.join(', ')}
 				</td>
 			</tr>
 			<tr>
 				<td>개발사</td>
 				<td>
-					{#each game.gameDeveloper as developer (developer)}
-						{developer}, &nbsp;
-					{/each}
+					{game.gameDeveloper.join(', ')}
 				</td>
 			</tr>
 			<tr>
 				<td>배급사</td>
 				<td>
-					{#each game.gamePublisher as publisher (publisher)}
-						{publisher}, &nbsp;
-					{/each}
+					{game.gamePublisher.join(', ')}
 				</td>
 			</tr>
 			<tr>
 				<td>플랫폼</td>
 				<td>
-					{#each game.gamePlatform as platform (platform)}
-						{platform}, &nbsp;
-					{/each}
+					{game.gamePlatform.join(', ')}
 				</td>
 			</tr>
 			<tr>

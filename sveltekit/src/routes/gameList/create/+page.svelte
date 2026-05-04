@@ -5,10 +5,10 @@
 	import { page } from '$app/state';
 
 	$effect(() => {
-        if (page.data?.success === false) {
-            alert(page.form.message);
-        }
-    });
+		if (page.data?.success === false) {
+			alert(page.form.message);
+		}
+	});
 
 	const handlerEnhance: SubmitFunction = ({ formData, cancel }) => {
 		const result = onSubmitForm(formData);
@@ -181,6 +181,17 @@
 				<td>
 					게임 영상
 					<input type="file" name="gameVideo" accept="video/mp4" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input
+						class="tt"
+						type="text"
+						placeholder="게임 경로 ex) /example"
+						name="gamePath"
+						maxlength="50"
+					/>
 				</td>
 			</tr>
 			<tr>

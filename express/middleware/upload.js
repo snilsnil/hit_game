@@ -21,18 +21,21 @@ const createFolder = (folderName) => {
 
 const gameStorage = multer.diskStorage({
     destination: (req, file, cb) => {
+        const slug = req.params.slug
         if (file.fieldname === 'gameImage') {
-            const checkFolder = createFolder('img');
-            cb(null, 'public/img/');
+            const checkFolder = createFolder('img', slug);
+            cb(null, `public/img/`);
         } else if (file.fieldname === 'gameVideo') {
-            const checkFolder = createFolder('video');
+            const checkFolder = createFolder('video', slug);
             cb(null, 'public/video/');
         } else {
             cb(new Error('Invalid field name'), false);
         }
     },
     filename: (req, file, cb) => {
-        const name = file.originalname;
+        const slug = req.params.slug
+        const ext = path.extname(file.originalname);
+        const name = `${slug}${ext}`;
         cb(null, name);
     }
 });

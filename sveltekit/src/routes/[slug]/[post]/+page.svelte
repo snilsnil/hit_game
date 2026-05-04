@@ -54,7 +54,7 @@
 		</tr>
 		<tr>
 			<td colspan="4" style="width:100px; height:200px; text-align:left;">
-				{postData.postDescription}
+				<pre>{postData.postDescription}</pre>
 			</td>
 		</tr>
 	</tbody>

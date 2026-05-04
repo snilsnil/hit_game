@@ -18,44 +18,44 @@
 							</a>
 						</li>
 						<li>
-							{#if !page.data.id }
-								<input id="login" type="button" value="로그인" onclick={() => {location.href = '/login';}} />
+							{#if !page.data.id}
+								<input
+									id="login"
+									type="button"
+									value="로그인"
+									onclick={() => {
+										location.href = '/login';
+									}}
+								/>
 							{:else}
-								<div  id="user">
-							{page.data.id}님 환영합니다. &nbsp;&nbsp; <input id="logout" type="button" value="로그아웃" onclick={() => {location.href = '/logout';}} />
+								<div id="user">
+									{page.data.id}님 환영합니다. &nbsp;&nbsp;
+									<input
+										id="logout"
+										type="button"
+										value="로그아웃"
+										onclick={() => {
+											location.href = '/logout';
+										}}
+									/>
+								</div>
+							{/if}
+						</li>
+						<li>
+							{#if page.data.role === 'admin'}
+								<div id="user">
+									<input
+										id="logout"
+										type="button"
+										value="게임 리스트"
+										onclick={() => {
+											location.href = '/gameList';
+										}}
+									/>
 								</div>
 							{/if}
 						</li>
 					</ul>
-
-
-					<!-- <table id="mainmenu">
-						<tbody>
-							<tr>
-								<td
-									style="width:120px; cursor:pointer;"
-									onclick={() => {
-										location.href = '/';
-									}}
-								>
-									<img style="width:120px; box-shadow:none;" src="/img/logo.png" alt="logo" />
-								</td>
-								<td>
-									{#if !page.data.id }
-
-										<input id="login" type="button" value="로그인" onclick={() => {location.href = '/login';}} />
-
-									{:else}
-
-										<div  id="user">
-											{page.data.id}님 환영합니다.<input id="logout" type="button" value="로그아웃" onclick={() => {location.href = '/logout';}} />
-										</div>
-
-									{/if}
-								</td>
-							</tr>
-						</tbody>
-					</table> -->
 				</div>
 			</div>
 		</h1>

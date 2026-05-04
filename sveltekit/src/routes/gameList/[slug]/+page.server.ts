@@ -1,16 +1,7 @@
-import { redirect } from "@sveltejs/kit";
-import type { PageServerLoad } from "../$types";
+import type { PageServerLoad } from "./$types";
 
-export const prerender = true;
-
-export const load: PageServerLoad = async ({ parent, params}) => {
-    const parentData = await parent();
+export const load: PageServerLoad = async({params} )=> { 
     const param = params;
-
-    if(parentData.role !== 'admin'||!parentData.role){
-        return redirect(302, '/');
-    }
-
     const getGameList = await fetch(`http://localhost:3000/gameList/${param.slug}`, {
         method:'GET',
     })
@@ -21,4 +12,4 @@ export const load: PageServerLoad = async ({ parent, params}) => {
     } else { 
         return {success: false, message:result.message}
     }
-};
+}

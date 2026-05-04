@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { page } from '$app/state';
 
-		$effect(() => {
-        if (page.data?.success === false) {
-            alert(page.form.message);
-        }
-    });
+	$effect(() => {
+		if (page.data?.success === false) {
+			alert(page.form.message);
+		}
+	});
 	const game = page.data.gameData;
 </script>
 
@@ -27,33 +27,25 @@
 			<tr>
 				<td>장르</td>
 				<td>
-					{#each game.gameGenre as genre (genre)}
-						{genre}, &nbsp;
-					{/each}
+					{game.gameGenre.join(', ')}
 				</td>
 			</tr>
 			<tr>
 				<td>개발사</td>
 				<td>
-					{#each game.gameDeveloper as developer (developer)}
-						{developer}, &nbsp;
-					{/each}
+					{game.gameDeveloper.join(', ')}
 				</td>
 			</tr>
 			<tr>
 				<td>배급사</td>
 				<td>
-					{#each game.gamePublisher as publisher (publisher)}
-						{publisher}, &nbsp;
-					{/each}
+					{game.gamePublisher.join(', ')}
 				</td>
 			</tr>
 			<tr>
 				<td>플랫폼</td>
 				<td>
-					{#each game.gamePlatform as platform (platform)}
-						{platform}, &nbsp;
-					{/each}
+					{game.gamePlatform.join(', ')}
 				</td>
 			</tr>
 			<tr>
@@ -86,16 +78,21 @@
 			</tr>
 			<tr>
 				<td>사진 경로</td>
-				<td>{game.gameImage}</td>
+				<td><a href={game.gameImage} target="_blank">{game.gameImage}</a></td>
 			</tr>
 			<tr>
 				<td>영상 경로</td>
-				<td>{game.gameVideo}</td>
+				<td><a href={game.gameVideo} target="_blank">{game.gameVideo}</a></td>
 			</tr>
 			<tr>
 				<td>내용</td>
-				<td>{game.gameDescription}</td>
+				<td><pre>{game.gameDescription}</pre></td>
 			</tr>
 		{/if}
 	</tbody>
 </table>
+<input
+	type="button"
+	onclick={() => (location.href = `${page.params.slug}/modification`)}
+	value="글 수정"
+/>
