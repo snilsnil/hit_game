@@ -62,9 +62,31 @@ module.exports = {
                 data: getPost
             })
         } catch (error) {
-            console.log(`Error findOne postData : ${error.message}`)
+            console.log(`Error increaseViewer postData : ${error.message}`)
             return res.json({
                 message: "게시글을 가져오는 도중 오류가 발생했습니다.",
+                statusCode: 500
+            })
+        }
+    },
+
+    modifyPost: async (req, res, next) => {
+        const slug = req.body.slug;
+        const postNum = req.body.postNum;
+        const postDescription = req.body.postDescription;
+
+
+        try {
+            const getPost = await PostList.findOneAndUpdate({ postGame: slug, postNum: postNum },
+                { postDescription: postDescription },)
+            return res.json({
+                message: "게시글을 성공적으로 수정되었습니다..",
+                statusCode: 200,
+            })
+        } catch (error) {
+            console.log(`Error modify postData : ${error.message}`)
+            return res.json({
+                message: "게시글을 수정하는 도중 오류가 발생했습니다.",
                 statusCode: 500
             })
         }
