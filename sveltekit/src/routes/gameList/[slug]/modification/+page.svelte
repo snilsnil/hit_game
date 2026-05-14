@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
 
 	const gameData = page.data.gameData;
@@ -399,9 +398,7 @@
 					<input type="file" name="gameImage" accept="image/png" />
 				</td>
 				<td>
-					게임 사진 경로 : <a href={resolve(gameData.gameImage)} target="_blank"
-						>{gameData.gameImage}</a
-					>
+					게임 사진 경로 : <a href={gameData.gameImage} target="_blank">{gameData.gameImage}</a>
 				</td>
 			</tr>
 			<tr>
@@ -410,9 +407,7 @@
 					<input type="file" name="gameVideo" accept="video/mp4" />
 				</td>
 				<td>
-					게임 영상 경로 : <a href={resolve(gameData.gameVideo)} target="_blank">
-						{gameData.gameVideo}</a
-					>
+					게임 영상 경로 : <a href={gameData.gameVideo} target="_blank"> {gameData.gameVideo}</a>
 				</td>
 			</tr>
 			<tr>

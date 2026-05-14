@@ -3,85 +3,12 @@
 const jwt = require("jsonwebtoken");
 const secretKey = process.env.SECRETKEY; // .env 파일에서 SECRETKEY 값을 가져옴
 
-// 사용자 모델과 bcrypt 라이브러리를 요청
+// 사용자 모델 라이브러리를 요청
 const User = require("../models/User"),
-    bcrypt = require("bcryptjs"),
-    getUserParams = (body) => {
-        return {
-            id: body.id,
-            email: body.email,
-            password: body.password,
-        }
-    }; // 사용자 모델 요청
-
-
-const findUserById = async (id) => {
-    try {
-        const user = await User.findOne({ id: id });
-        if (!user) {
-            return {
-                message: "존재하지 않는 ID입니다.",
-                statusCode: 400
-            };
-        } else
-            return { message: "사용자 조회 성공", statusCode: 200, user: user };
-    } catch (error) {
-        console.log(`Error finding user: ${error.message}`);
-        return { message: "사용자 조회 실패", statusCode: 500 };
-    }
-};
-
-//아이디와 비밀번호 검증하는 함수
-const validateUser = async (userData, userParams) => {
-    try {
-        const isPasswordValid = await bcrypt.compare(userParams.password, userData.password) || userParams.password === userData.password;
-        if (isPasswordValid) {
-            return {
-                message: "비밀번호가 일치합니다.",
-                statusCode: 200
-            };
-        } else {
-            return {
-                message: "비밀번호가 일치하지 않습니다.",
-                statusCode: 400
-            };
-        }
-    } catch (error) {
-        console.log(`Error during validation: ${error.message}`);
-        return {
-            message: "검증하는 도중 오류가 발생했습니다.",
-            statusCode: 500
-        };
-    }
-}
-
-// 새로운 토큰 생성 함수
-const newToken = async (userData) => {
-    try {
-        const accessToken = jwt.sign(
-            {
-                id: userData.id, role: userData.role
-            },
-            secretKey,
-            { expiresIn: "2h", algorithm: "HS256" });
-        const refreshToken = jwt.sign(
-            { id: userData.id },
-            secretKey,
-            { expiresIn: "7d", algorithm: "HS256" });
-        return {
-            message: "토큰생성 성공",
-            statusCode: 200,
-            accessToken: accessToken,
-            refreshToken: refreshToken
-        };
-    } catch (error) {
-        console.log(`Error during token generation: ${error.message}`);
-        return {
-            message: "토큰생성 중 오류가 발생했습니다.",
-            statusCode: 500
-        };
-    }
-};
+    { CreateUserDto, LoginUserDto } = require("../dto/User.dto"),
+    { validateUser, newToken } = require("../services/User.service"),
+    userRepository = require("../Repositories/User.repository"),
+    userService = require("../services/User.service");
 
 
 /**
@@ -104,35 +31,17 @@ module.exports = {
 
     // 회원가입 기능을 구현하는 컨트롤러 메서드
     signup: async (req, res, next) => {
-        const userParams = getUserParams(req.body);
-        try {
-            const newUser = await User.create({ ...userParams, role: "user" });
-            return res.json({
-                message: "회원가입이 성공적으로 완료되었습니다."
-                ,
-                statusCode: 200
-            });
-        } catch (error) {
-            console.log(`Error creating user: ${error.message}`);
-            if (error.keyValue && error.keyValue.id) {
-                return res.json({
-                    message: "이미 존재하는 ID입니다.",
-                    statusCode: 400
-                });
-            }
-            return res.json({
-                message: "회원가입 중 오류가 발생했습니다.",
-                statusCode: 500
-            });
-        }
+        const userParams = new CreateUserDto(req.body, "user");
+        const result = await userRepository.createUser(userParams);
+        return res.json(result);
     },
 
     // 로그인 기능을 구현하는 컨트롤러 메서드
     login: async (req, res, next) => {
-        let userParams = getUserParams(req.body);
+        const userParams = new LoginUserDto(req.body);
 
         try {
-            const user = await findUserById(userParams.id);
+            const user = await userRepository.findUserById(userParams.id);
             if (user.statusCode !== 200) {
                 return res.json(user);
             }
@@ -140,12 +49,12 @@ module.exports = {
             const userData = user.user;
 
             // 아이디와 비밀번호 검증
-            const validationResponse = await validateUser(userData, userParams);
+            const validationResponse = await userService.validateUser(userData, userParams);
 
             if (validationResponse.statusCode !== 200) {
                 return res.json(validationResponse);
             } else {
-                const tokenResponse = await newToken(userData);
+                const tokenResponse = await userService.newToken(userData);
                 return res.json(tokenResponse);
             }
         } catch (error) {
@@ -204,14 +113,14 @@ module.exports = {
             });
         }
 
-        const user = await findUserById(decoded.id);
+        const user = await userRepository.findUserById(decoded.id);
         if (user.statusCode !== 200) {
             return res.json(user);
         }
 
         const userData = user.user;
 
-        const newTokenResponse = await newToken(userData);
+        const newTokenResponse = await userService.newToken(userData);
         if (newTokenResponse.statusCode !== 200) {
             return res.json(newTokenResponse);
         }

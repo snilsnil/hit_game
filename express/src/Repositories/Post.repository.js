@@ -1,94 +1,74 @@
-"use strict";
-
-// 사용자 모델과 bcrypt 라이브러리를 요청
 const PostList = require("../models/postList/postList");
-const postData = (req) => {
-    return {
-        postGame: req.params.slug,
-        postTitle: req.body.postTitle,
-        poster: req.body.poster,
-        postView: 0,
-        postDescription: req.body.postDescription,
-    }
-};
 
-module.exports = {
-    getPostList: async (req, res, next) => {
+class PostRepository {
+    async findAllPostList(slug) {
         try {
-            const getPostListData = await PostList.find({ postGame: req.params.slug }, 'postNum postTitle postView poster postDate createdAt updatedAt')
-            return res.json({
+            const getPostListData = await PostList.find({ postGame: slug }, 'postNum postTitle postView poster postDate createdAt updatedAt')
+            return ({
                 message: "게시글 리스트를 성공적으로 가져왔습니다.",
                 statusCode: 200,
                 data: getPostListData
             })
         } catch (error) {
             console.log(`Error findAll postlist : ${error.message}`)
-            return res.json({
+            return ({
                 message: "게시글 리스트를 가져오는 도중 오류가 발생했습니다.",
                 statusCode: 500
             })
         }
-    },
+    }
 
-    writePost: async (req, res, next) => {
-        const post = postData(req)
-
+    async create(post) {
         try {
             const getWritePost = await PostList.create(post)
-            return res.json({
+            return ({
                 message: "게시글을 성공적으로 작성했습니다.",
                 statusCode: 200,
             })
         } catch (error) {
             console.log(`Error create post : ${error.message}`)
-            return res.json({
+            return ({
                 message: "게시글을 작성하는 도중 오류가 발생했습니다.",
                 statusCode: 500
             })
         }
-    },
+    }
 
-    getPostData: async (req, res, next) => {
-        const slug = req.params.slug;
-        const postNum = req.params.post
-
+    async findPostData(slug, postNum) {
         try {
             const getPost = await PostList.findOneAndUpdate({ postGame: slug, postNum: postNum },
                 { $inc: { postView: 1 } },  // 2. view 필드를 1만큼 증가 ($inc 사용)
                 { new: true },)
-            return res.json({
+            return ({
                 message: "게시글을 성공적으로 가져왔습니다.",
                 statusCode: 200,
                 data: getPost
             })
         } catch (error) {
             console.log(`Error increaseViewer postData : ${error.message}`)
-            return res.json({
+            return ({
                 message: "게시글을 가져오는 도중 오류가 발생했습니다.",
                 statusCode: 500
             })
         }
-    },
+    }
 
-    modifyPost: async (req, res, next) => {
-        const slug = req.body.slug;
-        const postNum = req.body.postNum;
-        const postDescription = req.body.postDescription;
-
-
+    async modifyPost(slug, postNum, postDescription) {
         try {
             const getPost = await PostList.findOneAndUpdate({ postGame: slug, postNum: postNum },
                 { postDescription: postDescription },)
-            return res.json({
+            return ({
                 message: "게시글을 성공적으로 수정되었습니다..",
                 statusCode: 200,
             })
         } catch (error) {
             console.log(`Error modify postData : ${error.message}`)
-            return res.json({
+            return ({
                 message: "게시글을 수정하는 도중 오류가 발생했습니다.",
                 statusCode: 500
             })
         }
     }
 }
+
+module.exports = new PostRepository();

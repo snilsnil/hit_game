@@ -19,7 +19,26 @@ const createFolder = (folderName) => {
     }
 }
 
-const gameStorage = multer.diskStorage({
+const gameCreateStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        const slug = req.params.slug
+        if (file.fieldname === 'gameImage') {
+            const checkFolder = createFolder('img', slug);
+            cb(null, `public/img/`);
+        } else if (file.fieldname === 'gameVideo') {
+            const checkFolder = createFolder('video', slug);
+            cb(null, 'public/video/');
+        } else {
+            cb(new Error('Invalid field name'), false);
+        }
+    },
+    filename: (req, file, cb) => {
+        const name = `${file.originalname}`;
+        cb(null, name);
+    }
+});
+
+const gameModifiedStorage = multer.diskStorage({
     destination: (req, file, cb) => {
         const slug = req.params.slug
         if (file.fieldname === 'gameImage') {
@@ -42,5 +61,6 @@ const gameStorage = multer.diskStorage({
 
 
 module.exports = {
-    gameListUpload: multer({ storage: gameStorage })
+    gameCreateUpload: multer({ storage: gameCreateStorage }),
+    gameModifiedUpload: multer({ storage: gameModifiedStorage })
 }

@@ -1,8 +1,6 @@
 // app.js
 "use strict";
 
-const communityController = require("./controllers/communityController");
-
 /**
  * =====================================================================
  * Define Express app and set it up
@@ -17,11 +15,11 @@ const express = require("express"), // express를 요청
 
 // controllers 폴더의 파일을 요청
 const
-  errorController = require("./controllers/errorController"),
-  userInfoController = require("./controllers/userInfoController"),
-  gameController = require("./controllers/gameController"),
-  postController = require("./controllers/postController"),
-  createAdmin = require("./seeds/admin"),
+  errorController = require("./src/controllers/errorController"),
+  userInfoController = require("./src/controllers/userInfoController"),
+  gameController = require("./src/controllers/gameController"),
+  postController = require("./src/controllers/postController"),
+  createAdmin = require("./src/seeds/admin"),
   cookieParser = require("cookie-parser"),
   connectFlash = require("connect-flash"),
   expressSession = require("express-session"),
@@ -30,7 +28,7 @@ const
 
 
 //middleware 파일 요청
-const upload = require("./middleware/upload")
+const upload = require("./src/middleware/upload")
 
 /**
  * =====================================================================
@@ -118,7 +116,7 @@ router.post("/checkRefreshToken", userInfoController.checkRefreshToken); // refr
 router.get("/gameList", gameController.getGameList)
 
 router.post('/gameCreate',
-  upload.gameListUpload.fields([
+  upload.gameCreateUpload.fields([
     { name: 'gameImage', maxCount: 1 },
     { name: 'gameVideo', maxCount: 1 }
   ]),
@@ -126,14 +124,14 @@ router.post('/gameCreate',
 );
 
 router.put('/modifyGame/:slug',
-  upload.gameListUpload.fields([
+  upload.gameModifiedUpload.fields([
     { name: 'gameImage', maxCount: 1 },
     { name: 'gameVideo', maxCount: 1 }
   ]),
   gameController.modifyGame
 );
 
-router.get("/gameList/:slug", gameController.getGame)
+router.get("/gameList/:slug", gameController.getGameData)
 
 
 
@@ -153,77 +151,7 @@ router.post('/:slug/write', postController.writePost)
 
 // public/favicon.ico가 없을 때 404 에러를 방지함
 app.get('/favicon.ico', (req, res) => res.status(204).end());
-/**
- * =====================================================================
- * game community site
- * =====================================================================
- */
 
-
-// router.get("/LOZBOTW", pagesController.showLOZBOTW);
-// router.post("/LOZBOTW/modified_:textNum", pagesController.showModified);
-// router.post("/LOZBOTW/view_:textNum", pagesController.showView);
-
-// router.get("/LOZSS", pagesController.showLOZSS);
-// router.post("/LOZSS/modified_:textNum", pagesController.showModified);
-// router.post("/LOZSS/view_:textNum", pagesController.showView);
-
-// router.get("/supermario", pagesController.showSupermario);
-// router.post("/supermario/modified_:textNum", pagesController.showModified);
-// router.post("/supermario/view_:textNum", pagesController.showView);
-
-// router.get("/ACV", pagesController.showACV);
-// router.post("/ACV/modified_:textNum", pagesController.showModified);
-// router.post("/ACV/view_:textNum", pagesController.showView);
-
-// router.get("/BF2", pagesController.showBF2);
-// router.post("/BF2/modified_:textNum", pagesController.showModified);
-// router.post("/BF2/view_:textNum", pagesController.showView);
-
-// router.get("/CODMW2", pagesController.showCODMW2);
-// router.post("/CODMW2/modified_:textNum", pagesController.showModified);
-// router.post("/CODMW2/view_:textNum", pagesController.showView);
-
-// router.get("/diablo4", pagesController.showDiablo4);
-// router.post("/diablo4/modified_:textNum", pagesController.showModified);
-// router.post("/diablo4/view_:textNum", pagesController.showView);
-
-// router.get("/fifa23", pagesController2.showFifa23);
-// router.post("/fifa23/modified_:textNum", pagesController.showModified);
-// router.post("/fifa23/view_:textNum", pagesController.showView);
-
-// router.get("/GOW", pagesController2.showGOW);
-// router.post("/GOW/modified_:textNum", pagesController.showModified);
-// router.post("/GOW/view_:textNum", pagesController.showView);
-
-// router.get("/LOL", pagesController2.showLOL);
-// router.post("/LOL/modified_:textNum", pagesController.showModified);
-// router.post("/LOL/view_:textNum", pagesController.showView);
-
-// router.get("/overwatch", pagesController2.showOverwatch);
-// router.post("/overwatch/modified_:textNum", pagesController.showModified);
-// router.post("/overwatch/view_:textNum", pagesController.showView);
-
-// router.get("/PLA", pagesController2.showPLA);
-// router.post("/PLA/modified_:textNum", pagesController.showModified);
-// router.post("/PLA/view_:textNum", pagesController.showView);
-
-// router.get("/tekken7", pagesController2.showTekken7);
-// router.post("/tekken7/modified_:textNum", pagesController.showModified);
-// router.post("/tekken7/view_:textNum", pagesController.showView);
-
-// router.get("/valorant", pagesController2.showValorant);
-// router.post("/valorant/modified_:textNum", pagesController.showModified);
-// router.post("/valorant/view_:textNum", pagesController.showView);
-
-
-
-
-
-// router.post("/write", pagesController.showWrite);
-// router.post("/writeAction", communityController.create);
-// router.post("/modifiedAction", communityController.modified);
-// router.post("/deleteAction", communityController.delete);
 
 
 app.listen(app.get("port"), () => {
